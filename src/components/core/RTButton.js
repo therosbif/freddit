@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Animated, Platform, Pressable, StyleSheet, Text } from 'react-native';
 import Easing from 'react-native/Libraries/Animated/Easing';
-import { useTheme } from '../providers/ThemeProvider';
+import { useTheme } from '../../providers/ThemeProvider';
 
 export default RTButton = ({ children, disabled = false, onPress, style, textStyle, title }) => {
   const theme = useTheme();

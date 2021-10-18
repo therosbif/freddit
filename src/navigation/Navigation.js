@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import Home from "../pages/Home";
 import { useTheme } from "../providers/ThemeProvider";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import RTIcon from "../components/RTIcon";
+import RTIcon from "../components/core/RTIcon";
 import { useRuntimeInfo } from "../providers/RuntimeInfoProvider";
 import Welcome from "../pages/Welcome";
 import Search from "../pages/Search";

@@ -36,7 +36,6 @@ export default RuntimeInfoProvider = ({ children }) => {
         }));
       }
     })().then(() => {
-      //setTimeout(() => { setSplashScreen(false) }, 5000);
       setSplashScreen(false);
     })
   }, [reload])
