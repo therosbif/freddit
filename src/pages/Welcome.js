@@ -1,54 +1,57 @@
-import React, { useState } from "react"
-import { StyleSheet, Text, View } from "react-native";
-import RTButton from "../components/core/RTButton";
-import SignInModal from "../components/SignInModal";
-import { useTheme } from "../providers/ThemeProvider";
+import React from "react"
+import { StyleSheet, View } from "react-native";
+import { useAuth } from "../providers/AuthProvider";
+import { useRuntimeInfo } from "../providers/RuntimeInfoProvider";
+import { useTheme, Button, Title } from "react-native-paper";
 
-export default Profile = () => {
+export default Welcome = () => {
   const theme = useTheme();
-  const styles = useStyle(theme.palette);
-  const [showModal, setShowModal] = useState(false);
+  const auth = useAuth();
+  const runtimeInfo = useRuntimeInfo();
+  const styles = useStyle(theme.colors);
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>Welcome to Freddi(t)!</Text>
+      <Title size={30}>Welcome to Freddi(t)!</Title>
       <View style={styles.buttonContainer}>
-        <RTButton
+        <Button
           style={styles.button}
-          title="Browse anonymously"
-          onPress={() => { console.log("pressed") }}
-        />
-        <RTButton
+          onPress={() => { runtimeInfo.setFirstRun(false) }}
+          mode='contained'
+        >
+          Browse anonymously
+        </Button>
+        <Button
           style={styles.button}
-          title="Sign in"
-          onPress={() => setShowModal(true)}
-        />
+          onPress={() => {
+            auth.setAuth().then(() => runtimeInfo.setFirstRun(false))
+          }}
+          mode='contained'
+        >
+          Sign In
+        </Button>
       </View>
-      {showModal &&
-        <SignInModal
-          onClose={() => setShowModal(false)}
-        />
-      }
     </View>
   )
 }
 
-const useStyle = (palette) => StyleSheet.create({
+const useStyle = (colors) => StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: palette.BACKGROUND,
-    justifyContent: 'center',
+    backgroundColor: colors.background,
+    justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  title: {
-    color: palette.TEXT,
+    paddingVertical: '10%',
   },
   buttonContainer: {
-    flexDirection: 'row',
+    maxHeight: "20%",
+    flexDirection: 'column',
     justifyContent: 'space-between',
   },
   button: {
-    flex: 1,
-    margin: "4%",
+    margin: '2%',
+  },
+  btext: {
+    overflow: 'visible'
   }
 })

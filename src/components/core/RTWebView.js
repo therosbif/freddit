@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { Platform, StyleSheet, Text, ToastAndroid, View } from "react-native";
+import { Modal, Platform, StyleSheet, ToastAndroid, View } from "react-native";
 import Clipboard from "@react-native-clipboard/clipboard";
 import WebView from "react-native-webview";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import RTButton from "./RTButton";
-import { useTheme } from "../../providers/ThemeProvider";
+import { Button, useTheme, Text } from "react-native-paper";
 
 export default RTWebView = ({ onClose, onLoad, source }) => {
   const theme = useTheme();
   const [uri, setUri] = useState(source.uri);
 
   const Header = () => {
-    const styles = useStyle(theme.palette);
+    const styles = useStyle(theme.colors);
 
     return (
       <View style={styles.container}>
@@ -30,21 +29,17 @@ export default RTWebView = ({ onClose, onLoad, source }) => {
             {uri}
           </Text>
         </Pressable>
-        <RTButton title="Close" onPress={onClose} style={styles.button} />
+        <Button title="Close" onPress={onClose} style={styles.button} />
       </View>
     )
   }
 
   return (
-    <>
+    <Modal animationType="slide">
       <Header />
       <WebView
         source={{ uri: uri }}
-        onLoad={(syntheticEvent) => {
-
-
-          onLoad(syntheticEvent);
-        }}
+        onLoad={onLoad}
         onLoadProgress={(syntheticEvent) => {
           const { nativeEvent } = syntheticEvent;
 
@@ -53,16 +48,16 @@ export default RTWebView = ({ onClose, onLoad, source }) => {
         autoManageStatusBarEnabled={true}
         forceDarkOn={theme.darkMode}
       />
-    </>
+    </Modal>
   )
 }
 
-const useStyle = (palette) => StyleSheet.create({
+const useStyle = (colors) => StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 5,
-    backgroundColor: palette.PRIMARY,
+    backgroundColor: colors.background,
   },
   button: {
     borderRadius: 0,

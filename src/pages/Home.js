@@ -1,30 +1,26 @@
 import React from "react"
-import { Button, StyleSheet, Text, View } from "react-native";
-import RTButton from "../components/core/RTButton";
+import { StyleSheet, View } from "react-native";
+import { Button, useTheme, Text } from "react-native-paper";
 import { useRuntimeInfo } from "../providers/RuntimeInfoProvider";
-import { useTheme } from "../providers/ThemeProvider";
 
 export default Home = () => {
   const theme = useTheme();
-  const styles = useStyle(theme.palette);
+  const styles = useStyle(theme.colors);
   const rtInfo = useRuntimeInfo();
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>HOME PAGE</Text>
-      <RTButton title="clear" onPress={rtInfo.reset}></RTButton>
+      <Text>HOME PAGE</Text>
+      <Button onPress={rtInfo.reset}>clear</Button>
     </View>
   )
 }
 
-const useStyle = (palette) => StyleSheet.create({
+const useStyle = (colors) => StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: palette.BACKGROUND,
+    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    color: palette.TEXT,
-  }
 })

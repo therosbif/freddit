@@ -1,14 +1,14 @@
-import ThemeProvider from "./ThemeProvider";
 import React from "react";
 import RuntimeInfoProvider from "./RuntimeInfoProvider";
+import AuthProvider from "./AuthProvider";
 
 export default StoreProvider = ({ children }) => {
 
   return (
-    <ThemeProvider>
-      <RuntimeInfoProvider>
+    <RuntimeInfoProvider>
+      <AuthProvider>
         {children}
-      </RuntimeInfoProvider>
-    </ThemeProvider>
+      </AuthProvider>
+    </RuntimeInfoProvider>
   );
 }
