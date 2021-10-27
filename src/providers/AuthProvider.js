@@ -9,16 +9,13 @@ const AuthContext = createContext(null);
 const AuthStorage = 'authStorage';
 
 export default AuthProvider = ({ children }) => {
-  const [reload, setReload] = useState(0);
   const [token, setToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
-  const [expirationDate, setExpirationDate] = useState(new Date());
 
   const setAuth = async () =>
     authorize(authConfig).then(data => {
       console.log(data);
       if (data.accessToken.length !== 0) {
-        setExpirationDate(data.accessTokenExpirationDate);
         setRefreshToken(data.refreshToken);
         setToken(data.accessToken);
       }
@@ -33,6 +30,7 @@ export default AuthProvider = ({ children }) => {
       },
       body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
     }).then(res => res.json()).then((data) => {
+      console.log(`ACCESS_TOKEN: ${data.accessToken}`)
       setToken(data.accessToken);
     }).catch(err => console.log(err))
   }

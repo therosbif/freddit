@@ -16,7 +16,6 @@ export default RuntimeInfoProvider = ({ children }) => {
         setReload(0);
         return resolve('Ok');
       }).catch((err) => {
-        console.log(err);
         return reject('Couldn\'t reset settings');
       }))
   }
@@ -37,7 +36,6 @@ export default RuntimeInfoProvider = ({ children }) => {
         }));
       }
     })().then(() => {
-      //setTimeout(() => setSplashScreen(false), 3000);
       setSplashScreen(false);
     })
   }, [reload])

@@ -1,21 +1,25 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { errors, SUCCESS } from "../api/constants";
-import { getMe } from "../api/profile";
+import { getUserAbout } from "../api/profile";
 import { useAuth } from "../providers/AuthProvider";
+import useMe from "./useMe";
 
-export default useMe = () => {
+export default useProfile = (username) => {
   const { token } = useAuth();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
+  if (username.length === 0) {
+    return useMe();
+  }
+
   useEffect(() => {
     if (token) {
       (async () => {
-        const raw = await getMe(token);
+        const raw = await getUserAbout(token, username);
 
         if (raw.ok && raw.status === 200) {
-          setData({ ...(await raw.json()), resStatus: SUCCESS });
+          setData({ ...(await raw.json()).data, resStatus: SUCCESS });
         } else {
           setData({ error: "Couldn't get profile information", resStatus: errors.NETWORK_ERROR });
         }
