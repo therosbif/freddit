@@ -6,7 +6,15 @@ const authConfig = {
   redirectUrl: 'com.redditech://oauth2redirect/reddit',
   clientId: 'CVv5Xz-CbREPVye86OgwAw',
   clientSecret: '',
-  scopes: ['identity'],
+  scopes: [
+    'identity',
+    'edit',
+    'mysubreddits',
+    'subscribe',
+    'vote',
+    'privatemessages',
+    'read',
+  ],
   serviceConfiguration: {
     authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',
     tokenEndpoint: 'https://www.reddit.com/api/v1/access_token',

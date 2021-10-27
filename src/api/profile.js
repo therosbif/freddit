@@ -9,4 +9,13 @@ async function getMe(token) {
   });
 }
 
-export { getMe }
+async function getUserAbout(token, username) {
+  return fetch(`${baseUrl}/user/${username}/about`, {
+    method: 'GET',
+    headers: {
+      Authorization: `bearer ${token}`
+    }
+  })
+}
+
+export { getMe, getUserAbout }

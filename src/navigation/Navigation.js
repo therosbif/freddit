@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Home from "../pages/Home";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useRuntimeInfo } from "../providers/RuntimeInfoProvider";
@@ -13,15 +13,14 @@ import Settings from "../pages/Settings";
 import SplashScreen from "./SplashScreen";
 import { useTheme } from "react-native-paper";
 import LoadingModal from "../components/LoadingModal";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
+const Tab = createMaterialBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default Navigation = () => {
   const { colors } = useTheme();
   const { loading, splashScreen, firstRun } = useRuntimeInfo();
   const styles = useStyle(colors);
-
-  const Tab = createMaterialBottomTabNavigator();
-  const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer >

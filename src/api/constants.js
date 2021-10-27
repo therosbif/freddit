@@ -5,4 +5,6 @@ const errors = {
   NETWORK_ERROR: 2,
 }
 
-export { baseUrl, errors }
+const SUCCESS = 0;
+
+export { baseUrl, errors, SUCCESS }

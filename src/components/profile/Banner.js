@@ -1,25 +1,29 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Avatar, Card, Divider, Text, Title } from "react-native-paper";
-import { useState } from "react/cjs/react.development";
+import React, { useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import { Avatar, Button, Card, Divider, IconButton, Text, Title, useTheme } from "react-native-paper";
 
-const desc = 'OUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU';
-
-export default Banner = ({ coverSource, profileSource }) => {
+export default Banner = ({ display_name, banner_img, icon_img, public_description }) => {
   const [maxLines, setMaxLines] = useState(0);
   const [lines, setLines] = useState(2);
+
+  const username = 'u/' + display_name.substr(2);
+  const bannerImg = banner_img.split('?')[0];
+  const iconImg = icon_img.split('?')[0];
+  const description = public_description;
+
+  const styles = useStyle();
 
   return (
     <View style={styles.banner}>
       <Card.Cover
-        resizeMode="contain"
-        source={coverSource}
+        resizeMode="cover"
+        source={{ uri: bannerImg }}
         style={styles.image}
       />
-      <View>
+      <>
         <View style={styles.description}>
-          <Avatar.Image style={{ backgroundColor: 'gray', alignSelf: 'flex-start' }} source={profileSource} />
-          <Title style={styles.title}>u/User</Title>
+          <Avatar.Image style={{ backgroundColor: 'gray', alignSelf: 'flex-start' }} source={{ uri: iconImg }} />
+          <Title style={styles.title}>{username}</Title>
         </View>
         <Text
           numberOfLines={lines}
@@ -27,23 +31,23 @@ export default Banner = ({ coverSource, profileSource }) => {
           onPress={() => setLines((lines === maxLines) ? 2 : maxLines)}
           style={styles.descriptionText}
         >
-          {desc}
+          {description}
         </Text>
-        <Divider />
-      </View>
+        <Divider style={{ flex: 1 }} />
+      </>
     </View>
   )
 }
 
-const styles = StyleSheet.create({
+const useStyle = () => StyleSheet.create({
   banner: {
     width: '100%',
-    height: '40%',
     alignItems: 'center',
+    backgroundColor: '#00000000'
   },
   image: {
     backgroundColor: 'gray',
-    width: '100%',
+    width: '100%'
   },
   description: {
     alignSelf: 'flex-start',
