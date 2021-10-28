@@ -30,14 +30,6 @@ export default Profile = ({ username = "" }) => {
         <Text>Check your network connection.</Text>
       </View>
     )
-  } else if (data.resStatus === errors.ANONYMOUS) {
-    return (
-      <View style={styles.notAuthRoot}>
-        <LoadingModal enabled={loading} />
-        <Text>You're browsing anonymously</Text>
-        <Button style={styles.signIn} onPress={() => { setAuth() }} mode="contained">Sign In</Button>
-      </View>
-    )
   }
 
   return (

@@ -30,9 +30,12 @@ export default AuthProvider = ({ children }) => {
       },
       body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
     }).then(res => res.json()).then((data) => {
-      console.log(`ACCESS_TOKEN: ${data.accessToken}`)
+      console.log(`NEW ACCESS_TOKEN: ${data.accessToken}`)
       setToken(data.accessToken);
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      console.log('ERROR WHILE REFRESHING:')
+      console.log(err);
+    })
   }
 
   useEffect(() => {
