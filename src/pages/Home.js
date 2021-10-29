@@ -12,12 +12,7 @@ export default Home = () => {
   const theme = useTheme();
   const styles = useStyle(theme.colors);
   const rtInfo = useRuntimeInfo();
-  const { refreshAccessToken } = useAuth();
   const { data, getPrev, getNext, loading } = useListing(getPostsListing, 'r/darkjokes', 1);
-
-  useEffect(() => {
-    refreshAccessToken();
-  }, []);
 
   if (data[0]?.error) {
     return (

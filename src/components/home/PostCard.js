@@ -8,10 +8,6 @@ import StringFormatter from "../../utils/StringFormatter";
 export default PostCard = ({ postData }) => {
   const { data, loading } = useProfile(postData.author);
 
-  useEffect(() => {
-    console.log(data?.subreddit);
-  }, [data]);
-
   const Header = () => {
     if (loading) {
       return <ActivityIndicator size={24} animating={true} />

@@ -36,13 +36,9 @@ export default AuthProvider = ({ children }) => {
         }
         const parsed = JSON.parse(data);
 
-        if (new Date(parsed.expirationDate) < new Date()) {
-          await refreshAccessToken();
-        } else {
-          setExpirationDate(parsed.expirationDate);
-          setRefreshToken(parsed.refreshToken);
-          setToken(parsed.token);
-        }
+        setExpirationDate(parsed.expirationDate);
+        setRefreshToken(parsed.refreshToken);
+        setToken(parsed.token);
         return resolve(true);
       }).catch((err) => {
         console.log(err);
@@ -83,7 +79,7 @@ export default AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    if (token.length !== 0) {
+    if (token?.length) {
       storeAuth();
     }
   }, [token])
@@ -94,10 +90,10 @@ export default AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (expirationDate) {
-      if (Date.now() - expirationDate < 120000) {
+      if (expirationDate - Date.now() < 120000) {
         refreshAccessToken();
       } else {
-        setTimeout(refreshAccessToken, expirationDate - Date.now() - 120000);
+        setTimeout(refreshAccessToken, expirationDate - Date.now());
       }
     }
   }, [expirationDate])
