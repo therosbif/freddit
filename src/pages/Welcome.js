@@ -13,24 +13,15 @@ export default Welcome = () => {
   return (
     <View style={styles.root}>
       <Title size={30}>Welcome to Freddi(t)!</Title>
-      <View style={styles.buttonContainer}>
-        <Button
-          style={styles.button}
-          onPress={() => { runtimeInfo.setFirstRun(false) }}
-          mode='contained'
-        >
-          Browse anonymously
-        </Button>
-        <Button
-          style={styles.button}
-          onPress={() => {
-            auth.setAuth().then(() => runtimeInfo.setFirstRun(false))
-          }}
-          mode='contained'
-        >
-          Sign In
-        </Button>
-      </View>
+      <Button
+        style={styles.button}
+        onPress={() => {
+          auth.setAuth().then(() => runtimeInfo.setFirstRun(false))
+        }}
+        mode='contained'
+      >
+        Sign In
+      </Button>
     </View>
   )
 }
@@ -39,14 +30,9 @@ const useStyle = (colors) => StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.background,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: '10%',
-  },
-  buttonContainer: {
-    maxHeight: "20%",
-    flexDirection: 'column',
-    justifyContent: 'space-between',
   },
   button: {
     margin: '2%',

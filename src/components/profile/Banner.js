@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
-import { Avatar, Button, Card, Divider, IconButton, Text, Title, useTheme } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Avatar, Card, Text, Title } from "react-native-paper";
 
 export default Banner = ({ display_name, banner_img, icon_img, public_description }) => {
   const [maxLines, setMaxLines] = useState(0);
@@ -33,7 +33,6 @@ export default Banner = ({ display_name, banner_img, icon_img, public_descriptio
         >
           {description}
         </Text>
-        <Divider style={{ flex: 1 }} />
       </>
     </View>
   )

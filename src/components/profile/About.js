@@ -18,6 +18,7 @@ export default About = ({ data }) => {
         banner_img={coverPic}
         description={description}
         display_name={displayName}
+        public_description={description}
       />
     </View>
   )

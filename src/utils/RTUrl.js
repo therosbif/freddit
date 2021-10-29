@@ -18,4 +18,15 @@ export default class RTURL {
     })
     return params;
   }
+
+  static asQueryParams(obj) {
+    let query = '?';
+
+    for (key in obj) {
+      if (obj[key]) {
+        query += `${key}=${obj[key]}&`
+      }
+    }
+    return query.substr(0, query.length - 1);
+  }
 }
