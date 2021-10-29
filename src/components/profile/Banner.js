@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Avatar, Card, Text, Title } from "react-native-paper";
+import RTURL from "../../utils/RTUrl";
 
 export default Banner = ({ display_name, banner_img, icon_img, public_description }) => {
   const [maxLines, setMaxLines] = useState(0);
   const [lines, setLines] = useState(2);
 
   const username = 'u/' + display_name.substr(2);
-  const bannerImg = banner_img.split('?')[0];
-  const iconImg = icon_img.split('?')[0];
+  const bannerImg = RTURL.removeQueryParams(banner_img);
+  const iconImg = RTURL.removeQueryParams(icon_img);
   const description = public_description;
 
   const styles = useStyle();

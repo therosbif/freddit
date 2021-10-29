@@ -13,21 +13,25 @@ import Settings from "../pages/Settings";
 import SplashScreen from "./SplashScreen";
 import { useTheme } from "react-native-paper";
 import LoadingModal from "../components/LoadingModal";
+import { useAuth } from "../providers/AuthProvider";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default Navigation = () => {
   const { colors } = useTheme();
-  const { loading, splashScreen, firstRun } = useRuntimeInfo();
+  const { loading, splashScreen } = useRuntimeInfo();
+  const { token } = useAuth();
   const styles = useStyle(colors);
+
+  useEffect(() => { }, [token])
 
   return (
     <NavigationContainer >
       <LoadingModal enabled={loading} />
       {splashScreen &&
         <SplashScreen />
-        || (!firstRun &&
+        || (token &&
           <Tab.Navigator initialRouteName="Home" labeled={false} barStyle={styles.barStyle}>
             <Tab.Screen name="Home" component={Home} options={{ tabBarIcon: "home" }} />
             <Tab.Screen name="Search" component={Search} options={{ tabBarIcon: "magnify" }} />
@@ -37,7 +41,9 @@ export default Navigation = () => {
           </Tab.Navigator>
           ||
           <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Welcome" component={Welcome} />
+            <Stack.Screen name="Welcome" component={Welcome} options={{
+              animationTypeForReplace: 'pop',
+            }} />
           </Stack.Navigator>)
       }
     </NavigationContainer>

@@ -1,14 +1,18 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react"
 import { StyleSheet, View } from "react-native";
-import { useTheme, Text } from "react-native-paper";
+import { useTheme, Text, Button } from "react-native-paper";
+import { useAuth } from "../providers/AuthProvider";
 
 export default Settings = () => {
   const theme = useTheme();
   const styles = useStyle(theme.colors);
+  const { logout } = useAuth();
+  const nav = useNavigation();
 
   return (
     <View style={styles.root}>
-      <Text>SETTINGS PAGE</Text>
+      <Button onPress={() => { logout() }}>Log Out</Button>
     </View>
   )
 }

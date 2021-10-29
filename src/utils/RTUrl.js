@@ -29,4 +29,8 @@ export default class RTURL {
     }
     return query.substr(0, query.length - 1);
   }
+
+  static removeQueryParams(url) {
+    return url.split('?')[0];
+  }
 }
