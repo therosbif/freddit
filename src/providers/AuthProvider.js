@@ -1,91 +1,104 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { authorize } from "react-native-app-auth";
-import base64 from "react-native-base64";
-import authConfig from "../authConfig";
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import {authorize} from 'react-native-app-auth';
+import base64 from 'react-native-base64';
+import authConfig from '../authConfig';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const AuthContext = createContext(null);
 const AuthStorage = 'authStorage';
 
-export default AuthProvider = ({ children }) => {
-  const [token, setToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
+export default AuthProvider = ({children}) => {
+  const [token, setToken] = useState('');
+  const [refreshToken, setRefreshToken] = useState('');
   const [expirationDate, setExpirationDate] = useState(null);
 
   const logout = async () => {
-    setToken("");
-    setRefreshToken("");
+    setToken('');
+    setRefreshToken('');
     return EncryptedStorage.removeItem(AuthStorage);
   };
 
   const storeAuth = async () => {
-    return EncryptedStorage.setItem(AuthStorage,
+    return EncryptedStorage.setItem(
+      AuthStorage,
       JSON.stringify({
         token,
         refreshToken,
         expirationDate,
-      })
-    )
-  }
+      }),
+    );
+  };
 
   const getAuth = async () => {
-    return new Promise((resolve, reject) => EncryptedStorage.getItem(AuthStorage)
-      .then(async (data) => {
-        if (!data) {
-          return reject(false);
-        }
-        const parsed = JSON.parse(data);
+    return new Promise((resolve, reject) =>
+      EncryptedStorage.getItem(AuthStorage)
+        .then(async data => {
+          if (!data) {
+            return reject(false);
+          }
+          const parsed = JSON.parse(data);
 
-        setExpirationDate(parsed.expirationDate);
-        setRefreshToken(parsed.refreshToken);
-        setToken(parsed.token);
-        return resolve(true);
-      }).catch((err) => {
-        console.log(err);
-        return reject(false)
-      })
+          setExpirationDate(parsed.expirationDate);
+          setRefreshToken(parsed.refreshToken);
+          setToken(parsed.token);
+          return resolve(true);
+        })
+        .catch(err => {
+          console.log(err);
+          return reject(false);
+        }),
     );
-  }
+  };
 
   const setAuth = async () => {
-    if (token.length === 0 && refreshToken.length === 0) {
-      return authorize(authConfig).then(data => {
-        console.log(data);
-        if (data.accessToken.length !== 0) {
-          setExpirationDate((new Date(data.accessTokenExpirationDate)).getTime());
-          setRefreshToken(data.refreshToken);
-          setToken(data.accessToken);
-        }
-      }).catch(err => console.log(err));
+    if ((!token || token.length === 0) && refreshToken.length === 0) {
+      return authorize(authConfig)
+        .then(data => {
+          console.log(data);
+          if (data.accessToken.length !== 0) {
+            setExpirationDate(
+              new Date(data.accessTokenExpirationDate).getTime(),
+            );
+            setRefreshToken(data.refreshToken);
+            setToken(data.accessToken);
+          }
+        })
+        .catch(err => console.log(err));
     }
-  }
+  };
 
   const refreshAccessToken = async () => {
     return fetch(`https://www.reddit.com/api/v1/access_token`, {
       method: 'POST',
       headers: {
         Authorization: `Basic ${base64.encode(authConfig.clientId + ':')}`,
-        "Content-Type": "application/x-www-form-urlencoded"
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
-    }).then(res => res.json()).then((data) => {
-      console.log(`NEW ACCESS_TOKEN: ${data.access_token}`)
-      setExpirationDate(Date.now() + data.expires_in * 1000);
-      setToken(data.access_token);
-    }).catch(err => {
-      console.log('ERROR WHILE REFRESHING:')
-      console.log(err);
     })
-  }
+      .then(res => {
+        if (res.ok) {
+          return res.json().then(data => {
+            console.log(`NEW ACCESS_TOKEN: ${data.access_token}`);
+            setExpirationDate(Date.now() + data.expires_in * 1000);
+            setToken(data.access_token);
+          });
+        }
+      })
+      .catch(err => {
+        console.log('ERROR WHILE REFRESHING:');
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
-    if (token?.length) {
+    if (token && token?.length) {
       storeAuth();
     }
-  }, [token])
+  }, [token]);
 
   useEffect(() => {
-    getAuth().catch(() => console.log("NO TOKEN STORED"));
+    getAuth().catch(() => console.log('NO TOKEN STORED'));
   }, []);
 
   useEffect(() => {
@@ -96,7 +109,7 @@ export default AuthProvider = ({ children }) => {
         setTimeout(refreshAccessToken, expirationDate - Date.now());
       }
     }
-  }, [expirationDate])
+  }, [expirationDate]);
 
   return (
     <AuthContext.Provider
@@ -104,13 +117,13 @@ export default AuthProvider = ({ children }) => {
         token,
         setAuth,
         logout,
-        refreshAccessToken
+        refreshAccessToken,
       }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 const useAuth = () => useContext(AuthContext);
 
-export { useAuth };
+export {useAuth};
