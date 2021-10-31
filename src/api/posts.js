@@ -3,14 +3,16 @@ import {baseUrl} from './constants';
 
 async function getSubPostsListing({
   token,
-  subreddit,
+  subreddit = '',
+  mode = 'hot',
   count,
   limit,
   before,
   after,
 }) {
+  subreddit = subreddit.length === 0 ? '' : '/' + subreddit;
   return fetch(
-    `${baseUrl}/${subreddit}/${RTURL.asQueryParams({
+    `${baseUrl}${subreddit}/${mode}/${RTURL.asQueryParams({
       count,
       limit,
       before,

@@ -7,7 +7,7 @@ export default function ModeSelector() {
   const {mode, setMode} = useMode();
   const theme = useTheme();
   const styles = useStyle(theme.colors);
-  const modes = ['Best', 'Hot', 'New', 'Random', 'Rising', 'Top'];
+  const modes = ['Best', 'Hot', 'New', 'Rising', 'Top'];
 
   return (
     <View style={styles.selector}>
