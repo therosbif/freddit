@@ -1,6 +1,3 @@
-import { ThemeProvider } from 'react-native-paper';
-import {SUCCESS} from '../api/constants';
-
 export default class Listing {
   constructor(cb, subreddit, mode, token, limit = 25) {
     this.cb = cb;
@@ -50,7 +47,7 @@ export default class Listing {
       after: this.after,
       count: this.count,
       subreddit: this.subreddit,
-      mode: ThemeProvider.mode,
+      mode: this.mode,
       token: this.token,
       ...extraArgs,
     };

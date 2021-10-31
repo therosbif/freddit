@@ -1,37 +1,33 @@
-import React, {useEffect, useState} from 'react';
-import {errors, SUCCESS} from '../api/constants';
-import {getUserAbout} from '../api/profile';
-import {useAuth} from '../providers/AuthProvider';
-import useMe from './useMe';
+import React, { useEffect, useState } from 'react';
+import { errors, SUCCESS } from '../api/constants';
+import { getMe, getUserAbout } from '../api/profile';
+import { useAuth } from '../providers/AuthProvider';
 
 export default useProfile = username => {
-  const {token} = useAuth();
+  const { token } = useAuth();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
-  const {meData, meLoading} = useMe();
 
   useEffect(() => {
-    if (!username || username.length === 0) {
-      return {meData, meLoading};
-    }
     if (token) {
       (async () => {
-        const raw = await getUserAbout(token, username);
+        const raw = (username?.length) ? await getUserAbout(token, username) : await getMe(token);
+        const json = (username?.length) ? (await raw.json()).data : await raw.json();
 
         if (raw.ok && raw.status === 200) {
-          setData({...(await raw.json()).data, resStatus: SUCCESS});
+          setData({ ...json, resStatus: SUCCESS });
         } else {
           setData({
             error: "Couldn't get profile information",
             resStatus: errors.NETWORK_ERROR,
           });
         }
-      })().then(() => setLoading(false));
+      })().then(() => setLoading(false)).catch((err) => { console.log(err); setLoading(false) });
     } else {
-      setData({error: 'Not connected', resStatus: errors.ANONYMOUS});
+      setData({ error: 'Not connected', resStatus: errors.ANONYMOUS });
       setLoading(false);
     }
   }, [token]);
 
-  return {data, loading};
+  return { data, loading };
 };
