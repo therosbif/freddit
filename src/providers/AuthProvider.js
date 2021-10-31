@@ -38,9 +38,9 @@ export default AuthProvider = ({children}) => {
           }
           const parsed = JSON.parse(data);
 
-          setExpirationDate(parsed.expirationDate);
           setRefreshToken(parsed.refreshToken);
           setToken(parsed.token);
+          setExpirationDate(parsed.expirationDate);
           return resolve(true);
         })
         .catch(err => {
@@ -56,11 +56,11 @@ export default AuthProvider = ({children}) => {
         .then(data => {
           console.log(data);
           if (data.accessToken.length !== 0) {
+            setRefreshToken(data.refreshToken);
+            setToken(data.accessToken);
             setExpirationDate(
               new Date(data.accessTokenExpirationDate).getTime(),
             );
-            setRefreshToken(data.refreshToken);
-            setToken(data.accessToken);
           }
         })
         .catch(err => console.log(err));

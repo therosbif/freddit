@@ -18,9 +18,7 @@ export default useListing = (
     listing
       .next(extraArgs)
       .then(res => {
-        if (res.ok) {
-          setData([...data, ...res]);
-        }
+        setData([...data, ...res]);
         setLoading(false);
       })
       .catch(error => {
@@ -34,9 +32,7 @@ export default useListing = (
     listing
       .prev(extraArgs)
       .then(res => {
-        if (res.ok) {
-          setData(res);
-        }
+        setData(res);
         setLoading(false);
       })
       .catch(error => {
@@ -59,9 +55,7 @@ export default useListing = (
       listing
         .init(initExtraArgs)
         .then(res => {
-          if (res.ok) {
-            setData([...data, ...res]);
-          }
+          setData([...data, ...res]);
           setLoading(false);
         })
         .catch(error => {

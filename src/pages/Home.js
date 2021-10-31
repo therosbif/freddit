@@ -13,8 +13,8 @@ export default Home = () => {
   const {mode} = useMode();
   const {data, getPrev, getNext, reload, loading} = useListing(
     getSubPostsListing,
-    'r/askreddit',
-    //mode.toLowerCase(),
+    //'r/askreddit',
+    mode.toLowerCase(),
     10,
   );
   console.log('DATA: ' + JSON.stringify(data));
