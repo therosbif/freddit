@@ -17,7 +17,6 @@ export default Home = () => {
     mode.toLowerCase(),
     10,
   );
-  console.log('DATA: ' + JSON.stringify(data));
 
   useEffect(() => {
     reload();
@@ -53,7 +52,7 @@ export default Home = () => {
   );
 };
 
-const useStyle = colors =>
+const useStyle = (colors) =>
   StyleSheet.create({
     root: {
       backgroundColor: colors.background,

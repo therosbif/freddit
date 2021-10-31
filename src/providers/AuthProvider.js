@@ -41,7 +41,7 @@ export default AuthProvider = ({ children }) => {
 
           setRefreshToken(parsed.refreshToken);
           setToken(parsed.token);
-          setExpirationDate(parsed.expirationDate);
+          setExpirationDate(parsed.expirationDate ? parsed.expirationDate : 1);
           return resolve(true);
         })
         .catch(err => {

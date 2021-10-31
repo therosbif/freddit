@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {
   ActivityIndicator,
   Avatar,
@@ -15,9 +15,13 @@ import useSubredditInfo from '../../hooks/useSubredditInfo';
 import RTURL from '../../utils/RTUrl';
 import StringFormatter from '../../utils/StringFormatter';
 
-export default PostCard = ({ postData }) => {
-  const { data: profileData, loading: profileLoading } = useProfile(postData?.author);
-  const { data: subData, loading: subLoading } = useSubredditInfo(postData?.subreddit);
+export default PostCard = ({postData}) => {
+  const {data: profileData, loading: profileLoading} = useProfile(
+    postData?.author,
+  );
+  const {data: subData, loading: subLoading} = useSubredditInfo(
+    postData?.subreddit,
+  );
 
   if (!postData) {
     return <Text>post undefined</Text>;
@@ -27,44 +31,55 @@ export default PostCard = ({ postData }) => {
     if (profileLoading || subLoading) {
       return <ActivityIndicator size={24} animating={true} />;
     }
-    console.log('subData: ' + JSON.stringify(subData));
-    console.log('profileData: ' + JSON.stringify(profileData));
-    if (!profileData) {
-      return <Text>No profile data.</Text>
-    } else if (!subData) {
-      return <Text>No subreddit data.</Text>
-    }
+    // console.log('subData: ' + JSON.stringify(subData));
+    // console.log('profileData: ' + JSON.stringify(profileData));
     return (
       <TouchableRipple
         rippleColor="rgba(255, 255, 255, .32)"
         borderless={true}
         onPress={() => console.log('zefibze')}
-        style={{ borderRadius: 50 }}>
+        style={{borderRadius: 50}}>
         <>
-          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <Avatar.Image
-              size={24}
-              source={{
-                uri: RTURL.removeQueryParams(profileData.subreddit.icon_img),
-              }}
-            />
-            <Text
-              style={{ textAlignVertical: 'center', marginLeft: 5, fontSize: 12 }}
-              numberOfLines={1}>
-              u/{profileData.subreddit.display_name.substr(2)}
-            </Text>
-          </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            {/* <Avatar.Image
-            size={24}
-            source={{uri: RTURL.removeQueryParams(subData)}}
-          /> */}
-            <Text
-              style={{ textAlignVertical: 'center', marginLeft: 5, fontSize: 12 }}
-              numberOfLines={1}>
-              r/{postData.subreddit}
-            </Text>
-          </View>
+          {!profileData ? (
+            <Text>No profile data.</Text>
+          ) : (
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+              <Avatar.Image
+                size={24}
+                source={{
+                  uri: RTURL.removeQueryParams(profileData.subreddit.icon_img),
+                }}
+              />
+              <Text
+                style={{
+                  textAlignVertical: 'center',
+                  marginLeft: 5,
+                  fontSize: 12,
+                }}
+                numberOfLines={1}>
+                u/{profileData.subreddit.display_name.substr(2)}
+              </Text>
+            </View>
+          )}
+          {!subData ? (
+            <Text>No subreddit data.</Text>
+          ) : (
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+              <Avatar.Image
+                size={24}
+                source={{uri: RTURL.removeQueryParams(subData.data.icon_img)}}
+              />
+              <Text
+                style={{
+                  textAlignVertical: 'center',
+                  marginLeft: 5,
+                  fontSize: 12,
+                }}
+                numberOfLines={1}>
+                r/{postData.subreddit}
+              </Text>
+            </View>
+          )}
         </>
       </TouchableRipple>
     );
@@ -79,9 +94,9 @@ export default PostCard = ({ postData }) => {
       <Card.Content>
         <Paragraph numberOfLines={3}>{postData.selftext}</Paragraph>
       </Card.Content>
-      {/.*\.(jpg|gif|png)$/.test(postData.url) &&
-        <Card.Cover resizeMode='cover' source={{ uri: postData.url }} />
-      }
+      {/.*\.(jpg|gif|png)$/.test(postData.url) && (
+        <Card.Cover resizeMode="cover" source={{uri: postData.url}} />
+      )}
       <Card.Actions>
         <IconButton icon="arrow-up-bold" color="red" />
         <Text>{StringFormatter.abbrevNumber(postData.ups)}</Text>
