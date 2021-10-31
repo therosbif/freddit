@@ -31,6 +31,8 @@ export default class RTURL {
   }
 
   static removeQueryParams(url) {
-    return url.split('?')[0];
+    if (url) {
+      return url.split('?')[0];
+    }
   }
 }

@@ -4,7 +4,7 @@ import {errors, SUCCESS} from '../api/constants';
 import {getSubredditInfo} from '../api/subreddit';
 import {useAuth} from '../providers/AuthProvider';
 
-export default useSubredditInfo = ({subreddit}) => {
+export default useSubredditInfo = (subreddit) => {
   const {token} = useAuth();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);

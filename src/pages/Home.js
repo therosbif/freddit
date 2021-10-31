@@ -72,7 +72,7 @@ export default Home = () => {
   );
 };
 
-const useStyle = colors =>
+const useStyle = (colors) =>
   StyleSheet.create({
     root: {
       backgroundColor: colors.background,

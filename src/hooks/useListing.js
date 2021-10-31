@@ -13,7 +13,7 @@ export default useListing = (
   const { token } = useAuth();
   const [listing, setListing] = useState(null);
 
-  const getNext = (extraArgs = {}) => {
+  const getNext = async (extraArgs = {}) => {
     setLoading(true);
     listing
       .next(extraArgs)
@@ -27,7 +27,7 @@ export default useListing = (
       });
   };
 
-  const getPrev = (extraArgs = {}) => {
+  const getPrev = async (extraArgs = {}) => {
     setLoading(true);
     listing
       .prev(extraArgs)
