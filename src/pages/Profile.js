@@ -33,7 +33,7 @@ export default Profile = ({username = ''}) => {
   return (
     <View>
       <About data={data} />
-      <PostFeed subreddit={data.name} />
+      {/* <PostFeed subreddit={data.name} /> */}
     </View>
   );
 };

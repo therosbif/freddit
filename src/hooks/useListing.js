@@ -50,10 +50,6 @@ export default useListing = (
   };
 
   useEffect(() => {
-    reload();
-  }, []);
-
-  useEffect(() => {
     if (listing) {
       listing
         .init(initExtraArgs)

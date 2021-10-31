@@ -11,13 +11,13 @@ export default PostFeed = ({ subreddit }) => {
   const [mode, setMode] = useState('Hot');
   const { data, getPrev, getNext, reload, loading } = useListing(
     getSubPostsListing,
-    '',
+    subreddit,
     mode.toLowerCase(),
     25,
   );
 
   useEffect(() => {
-    console.log(subreddit);
+    console.log('subreddit: ' + subreddit);
     reload();
     console.log('mode: ' + mode);
   }, [mode]);
