@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react"
 import { StyleSheet, View } from "react-native";
-import { useTheme, Text, Button } from "react-native-paper";
+import { useTheme, Button } from "react-native-paper";
 import { useAuth } from "../providers/AuthProvider";
 
 export default Settings = () => {

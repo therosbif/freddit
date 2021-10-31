@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
   ActivityIndicator,
   Avatar,
@@ -14,8 +14,8 @@ import useProfile from '../../hooks/useProfile';
 import RTURL from '../../utils/RTUrl';
 import StringFormatter from '../../utils/StringFormatter';
 
-export default PostCard = ({postData}) => {
-  const {data, loading} = useProfile(postData?.author);
+export default PostCard = ({ postData }) => {
+  const { data, loading } = useProfile(postData?.author);
 
   if (!postData) {
     return <Text>post undefined</Text>;
@@ -30,19 +30,19 @@ export default PostCard = ({postData}) => {
         rippleColor="rgba(255, 255, 255, .32)"
         borderless={true}
         onPress={() => console.log('zefibze')}
-        style={{borderRadius: 50}}>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        style={{ borderRadius: 50 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           <Avatar.Image
             size={24}
-            source={{uri: RTURL.removeQueryParams(data.subreddit.icon_img)}}
+            source={{ uri: RTURL.removeQueryParams(data.subreddit.icon_img) }}
           />
           <Text
-            style={{textAlignVertical: 'center', marginLeft: 5, fontSize: 12}}
+            style={{ textAlignVertical: 'center', marginLeft: 5, fontSize: 12 }}
             numberOfLines={1}>
             {'u/' + data.subreddit.display_name.substr(2)}
           </Text>
           <Text
-            style={{textAlignVertical: 'center', marginLeft: 5, fontSize: 12}}
+            style={{ textAlignVertical: 'center', marginLeft: 5, fontSize: 12 }}
             numberOfLines={1}>
             {'r/' + postData.subreddit}
           </Text>
@@ -58,12 +58,9 @@ export default PostCard = ({postData}) => {
       </Card.Content>
       <Card.Title title={postData.title} titleNumberOfLines={0} />
       <Card.Content>
-        {postData.is_self ? (
-          <Paragraph numberOfLines={3}>{postData.selftext}</Paragraph>
-        ) : (
-          <Image source={{uri: postData.thumbnail}} />
-        )}
+        <Paragraph numberOfLines={3}>{postData.selftext}</Paragraph>
       </Card.Content>
+      {(!postData.is_self) && <Card.Cover resizeMode='cover' source={{ uri: postData.url }} />}
       <Card.Actions>
         <IconButton icon="arrow-up-bold" color="red" />
         <Text>{StringFormatter.abbrevNumber(postData.ups)}</Text>
