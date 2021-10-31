@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
-import { getSubPostsListing } from '../api/posts';
+import React, {useEffect, useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
+import {useTheme, Text} from 'react-native-paper';
+import {getSubPostsListing} from '../api/posts';
 import PostCard from '../components/home/PostCard';
 import useListing from '../hooks/useListing';
 
@@ -9,7 +9,7 @@ export default Home = () => {
   const theme = useTheme();
   const styles = useStyle(theme.colors);
   const [mode, setMode] = useState('Hot');
-  const { data, getPrev, getNext, reload, loading } = useListing(
+  const {data, getPrev, getNext, reload, loading} = useListing(
     getSubPostsListing,
     '',
     mode.toLowerCase(),
@@ -21,7 +21,7 @@ export default Home = () => {
     console.log('mode: ' + mode);
   }, [mode]);
 
-  const renderPost = ({ item, index }) => {
+  const renderPost = ({item, index}) => {
     if (item.kind.substring(0, 3) === 't3') {
       return <PostCard postData={item.data} key={index} />;
     }
@@ -47,18 +47,18 @@ export default Home = () => {
         ))}
       </View>
     );
-  }
+  };
 
   if (data[0]?.error) {
     return (
-      <View style={{ ...styles.root, flex: 1 }}>
-        <Text style={{ textAlign: 'center' }}>Error: {data[0].error}</Text>
+      <View style={{...styles.root, flex: 1}}>
+        <Text style={{textAlign: 'center'}}>Error: {data[0].error}</Text>
       </View>
     );
   }
 
   return (
-    <SafeAreaView style={{ ...styles.root }}>
+    <SafeAreaView style={{...styles.root}}>
       <FlatList
         data={data}
         renderItem={renderPost}
