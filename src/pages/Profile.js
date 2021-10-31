@@ -15,9 +15,6 @@ export default Profile = ({ username = "" }) => {
   const styles = useStyle(theme.colors);
   const { data, loading } = useProfile(username);
 
-  const Test = () => (<View style={{ backgroundColor: theme.colors.background, flex: 1 }}></View>);
-  const PassProps = (component, props) => () => (component(props))
-
   if (loading) {
     return (<View style={styles.root}><LoadingModal enabled /></View>)
   } else if (data.resStatus === errors.NETWORK_ERROR) {
