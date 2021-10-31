@@ -1,26 +1,18 @@
-import React from "react"
-import { StyleSheet, Text, View } from "react-native";
-import { useTheme } from "../providers/ThemeProvider";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import PostFeed from '../components/PostFeed';
+
+const Stack = createNativeStackNavigator();
 
 export default Home = () => {
-  const theme = useTheme();
-  const styles = useStyle(theme.palette);
-
   return (
-    <View style={styles.root}>
-      <Text style={styles.title}>HOME PAGE</Text>
-    </View>
+    <Stack.Navigator initialRouteName="BaseFeed" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="BaseFeed" component={PostFeed} options={{
+        animationTypeForReplace: 'push',
+      }} />
+      <Stack.Screen name="SubReddit" component={PostFeed} options={{
+        animationTypeForReplace: 'push',
+      }} />
+    </Stack.Navigator>
   )
-}
-
-const useStyle = (palette) => StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: palette.BACKGROUND,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    color: palette.TEXT,
-  }
-})
+};

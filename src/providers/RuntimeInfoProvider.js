@@ -8,6 +8,7 @@ export default RuntimeInfoProvider = ({ children }) => {
   const [reload, setReload] = useState(0);
   const [splashScreen, setSplashScreen] = useState(true);
   const [firstRun, setFirstRun] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const reset = async () => {
     return new Promise((resolve, reject) => AsyncStorage.removeItem(runtimeInfoStorage)
@@ -15,7 +16,6 @@ export default RuntimeInfoProvider = ({ children }) => {
         setReload(0);
         return resolve('Ok');
       }).catch((err) => {
-        console.log(err);
         return reject('Couldn\'t reset settings');
       }))
   }
@@ -36,7 +36,6 @@ export default RuntimeInfoProvider = ({ children }) => {
         }));
       }
     })().then(() => {
-      //setTimeout(() => { setSplashScreen(false) }, 5000);
       setSplashScreen(false);
     })
   }, [reload])
@@ -55,8 +54,10 @@ export default RuntimeInfoProvider = ({ children }) => {
     <RuntimeInfoContext.Provider
       value={{
         firstRun,
+        loading,
         splashScreen,
         reset,
+        setLoading,
         setFirstRun,
       }}>
       {children}

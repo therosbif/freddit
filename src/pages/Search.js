@@ -1,26 +1,23 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native";
-import { useTheme } from "../providers/ThemeProvider";
+import { StyleSheet, View } from "react-native";
+import { useTheme, Text } from "react-native-paper";
 
 export default Search = () => {
   const theme = useTheme();
-  const styles = useStyle(theme.palette);
+  const styles = useStyle(theme.colors);
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>SEARCH PAGE</Text>
+      <Text>SEARCH PAGE</Text>
     </View>
   )
 }
 
-const useStyle = (palette) => StyleSheet.create({
+const useStyle = (colors) => StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: palette.BACKGROUND,
+    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    color: palette.TEXT,
-  }
 })

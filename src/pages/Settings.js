@@ -1,26 +1,27 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react"
-import { StyleSheet, Text, View } from "react-native";
-import { useTheme } from "../providers/ThemeProvider";
+import { StyleSheet, View } from "react-native";
+import { useTheme, Button } from "react-native-paper";
+import { useAuth } from "../providers/AuthProvider";
 
 export default Settings = () => {
   const theme = useTheme();
-  const styles = useStyle(theme.palette);
+  const styles = useStyle(theme.colors);
+  const { logout } = useAuth();
+  const nav = useNavigation();
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>SETTINGS PAGE</Text>
+      <Button onPress={() => { logout() }}>Log Out</Button>
     </View>
   )
 }
 
-const useStyle = (palette) => StyleSheet.create({
+const useStyle = (colors) => StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: palette.BACKGROUND,
+    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    color: palette.TEXT,
-  }
 })
