@@ -59,7 +59,9 @@ export default AuthProvider = ({ children }) => {
           if (data.accessToken.length !== 0) {
             setRefreshToken(data.refreshToken);
             setToken(data.accessToken);
-            setExpirationDate(new Date(data.accessTokenExpirationDate).getTime());
+            setExpirationDate(
+              new Date(data.accessTokenExpirationDate).getTime(),
+            );
           }
         })
         .catch(err => console.log(err));
