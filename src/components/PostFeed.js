@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
+import { useTheme, Text, Button } from 'react-native-paper';
 import { getSubPostsListing } from '../api/posts';
 import PostCard from './home/PostCard';
 import useListing from '../hooks/useListing';
@@ -54,6 +54,7 @@ export default PostFeed = ({ subreddit }) => {
     return (
       <View style={{ ...styles.root, flex: 1 }}>
         <Text style={{ textAlign: 'center' }}>Error: {data[0].error}</Text>
+        <Button onPress={reload}>retry</Button>
       </View>
     );
   }

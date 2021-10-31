@@ -20,13 +20,9 @@ export default PostCard = ({ postData }) => {
     postData?.author,
   );
   const { data: subData, loading: subLoading } = useSubredditInfo(
-    postData?.subreddit,
+    `r/${postData?.subreddit}`,
   );
   const { upvote, downvote, unvote, state } = useVote(postData.name, postData.likes);
-
-  useEffect(() => {
-    console.log(subData);
-  }, [subData])
 
   if (!postData) {
     return <Text>post undefined</Text>;
