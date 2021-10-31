@@ -1,12 +1,13 @@
 import React from 'react';
 import RuntimeInfoProvider from './RuntimeInfoProvider';
 import AuthProvider from './AuthProvider';
+import SubredditProvider from './SubredditProvider';
 
-export default StoreProvider = ({ children }) => {
+export default StoreProvider = ({children}) => {
   return (
     <RuntimeInfoProvider>
       <AuthProvider>
-        {children}
+        <SubredditProvider>{children}</SubredditProvider>
       </AuthProvider>
     </RuntimeInfoProvider>
   );

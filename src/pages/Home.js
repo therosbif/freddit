@@ -1,20 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-import {useTheme, Text} from 'react-native-paper';
+import {
+  useTheme,
+  Text,
+  Card,
+  Avatar,
+  Paragraph,
+  IconButton,
+} from 'react-native-paper';
 import {getSubPostsListing} from '../api/posts';
 import PostCard from '../components/home/PostCard';
+import SubredditBanner from '../components/home/SubredditBanner';
+import LoadingModal from '../components/LoadingModal';
 import useListing from '../hooks/useListing';
+import useSubredditInfo from '../hooks/useSubredditInfo';
+import {useSubreddit} from '../providers/SubredditProvider';
 
 export default Home = () => {
   const theme = useTheme();
   const styles = useStyle(theme.colors);
   const [mode, setMode] = useState('Hot');
+  const [subreddit, setSubreddit] = useSubreddit();
   const {data, getPrev, getNext, reload, loading} = useListing(
     getSubPostsListing,
-    '',
+    subreddit,
     mode.toLowerCase(),
     25,
   );
+  const {data: subData, loading: subLoading} = useSubredditInfo(subreddit);
 
   useEffect(() => {
     reload();
@@ -49,6 +62,25 @@ export default Home = () => {
     );
   };
 
+  const Header = () => {
+    if (subLoading) {
+      return <LoadingModal enabled={subLoading} />;
+    }
+    console.log(subreddit.substr(2) + ' subData: ' + JSON.stringify(subData));
+    return (
+      <View>
+        {!subreddit || subreddit.length === 0 ? (
+          <></>
+        ) : subData.error ? (
+          <Text>No subreddit data. {subData.error}</Text>
+        ) : (
+          <SubredditBanner data={subData} />
+        )}
+        <ModeSelector />
+      </View>
+    );
+  };
+
   if (data[0]?.error) {
     return (
       <View style={{...styles.root, flex: 1}}>
@@ -62,7 +94,7 @@ export default Home = () => {
       <FlatList
         data={data}
         renderItem={renderPost}
-        ListHeaderComponent={() => <ModeSelector />}
+        ListHeaderComponent={() => <Header />}
         onEndReached={getNext}
         onEndReachedThreshold={2}
         onRefresh={reload}

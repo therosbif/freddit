@@ -4,7 +4,7 @@ import Listing from '../utils/Listing';
 
 export default useListing = (
   listingCb,
-  subreddit,
+  subreddit = '',
   mode,
   limit = 25,
   initExtraArgs = {},
