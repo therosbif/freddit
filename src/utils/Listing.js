@@ -1,4 +1,4 @@
-import {SUCCESS} from '../api/constants';
+import { SUCCESS } from '../api/constants';
 
 export default class Listing {
   constructor(cb, subreddit, token, limit = 25) {

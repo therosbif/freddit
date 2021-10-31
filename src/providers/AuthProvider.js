@@ -41,7 +41,7 @@ export default AuthProvider = ({ children }) => {
 
           setRefreshToken(parsed.refreshToken);
           setToken(parsed.token);
-          setExpirationDate(parsed.expirationDate);
+          setExpirationDate(parsed.expirationDate ? parsed.expirationDate : 1);
           return resolve(true);
         })
         .catch(err => {
@@ -81,8 +81,8 @@ export default AuthProvider = ({ children }) => {
       .then(res => {
         if (res.ok) {
           return res.json().then(data => {
-            console.log("izfbzmiebfzef");
-            console.log(data.expires_in);
+            console.log('REFRESHED:');
+            console.log(data);
             setExpirationDate(Date.now() + data.expires_in * 1000);
             setToken(data.access_token);
           });

@@ -1,45 +1,64 @@
-import React, {useEffect} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-import {useTheme, Text} from 'react-native-paper';
-import {getSubPostsListing} from '../api/posts';
-import ModeSelector from '../components/home/ModeSelector';
+import React, { useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { useTheme, Text } from 'react-native-paper';
+import { getSubPostsListing } from '../api/posts';
 import PostCard from '../components/home/PostCard';
 import useListing from '../hooks/useListing';
-import {useMode} from '../providers/ModeProvider';
 
 export default Home = () => {
   const theme = useTheme();
   const styles = useStyle(theme.colors);
-  const {mode} = useMode();
-  const {data, getPrev, getNext, reload, loading} = useListing(
+  const [mode, setMode] = useState('Hot');
+  const { data, getPrev, getNext, reload, loading } = useListing(
     getSubPostsListing,
     //'r/askreddit',
     mode.toLowerCase(),
-    10,
+    25,
   );
-  console.log('DATA: ' + JSON.stringify(data));
 
   useEffect(() => {
     reload();
     console.log('mode: ' + mode);
   }, [mode]);
 
-  const renderPost = ({item, index}) => {
+  const renderPost = ({ item, index }) => {
     if (item.kind.substring(0, 3) === 't3') {
       return <PostCard postData={item?.data} key={index} />;
     }
   };
 
+  const ModeSelector = () => {
+    const modes = ['Best', 'Hot', 'New', 'Rising', 'Top'];
+
+    return (
+      <View style={styles.selector}>
+        {modes.map((mode_text, index) => (
+          <Text
+            key={index}
+            onPress={() => {
+              setMode(mode_text);
+            }}
+            style={{
+              ...styles.mode,
+              backgroundColor: mode === mode_text ? '#88888888' : '#00000000',
+            }}>
+            {mode_text}
+          </Text>
+        ))}
+      </View>
+    );
+  }
+
   if (data[0]?.error) {
     return (
-      <View style={{...styles.root, flex: 1}}>
-        <Text style={{textAlign: 'center'}}>Error: {data[0].error}</Text>
+      <View style={{ ...styles.root, flex: 1 }}>
+        <Text style={{ textAlign: 'center' }}>Error: {data[0].error}</Text>
       </View>
     );
   }
 
   return (
-    <SafeAreaView style={{...styles.root}}>
+    <SafeAreaView style={{ ...styles.root }}>
       <FlatList
         data={data}
         renderItem={renderPost}
@@ -57,5 +76,25 @@ const useStyle = colors =>
   StyleSheet.create({
     root: {
       backgroundColor: colors.background,
+    },
+    selector: {
+      backgroundColor: 'rgba(255, 255, 255, .12)',
+      flexDirection: 'row',
+      borderRadius: 50,
+      borderColor: colors.background,
+      borderWidth: 4,
+      margin: 10,
+      height: 45,
+      width: '95%',
+      alignSelf: 'flex-end',
+      justifyContent: 'space-evenly',
+    },
+    mode: {
+      flex: 1,
+      justifyContent: 'center',
+      borderRadius: 50,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      height: '100%',
     },
   });

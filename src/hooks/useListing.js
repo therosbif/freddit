@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useAuth} from '../providers/AuthProvider';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../providers/AuthProvider';
 import Listing from '../utils/Listing';
 
 export default useListing = (
@@ -10,7 +10,7 @@ export default useListing = (
 ) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const {token} = useAuth();
+  const { token } = useAuth();
   const [listing, setListing] = useState(null);
 
   const getNext = (extraArgs = {}) => {
@@ -22,7 +22,7 @@ export default useListing = (
         setLoading(false);
       })
       .catch(error => {
-        setData([{error}]);
+        setData([{ error }]);
         setLoading(false);
       });
   };
@@ -36,13 +36,14 @@ export default useListing = (
         setLoading(false);
       })
       .catch(error => {
-        setData([{error}]);
+        setData([{ error }]);
         setLoading(false);
       });
   };
 
   const reload = () => {
-    console.log('RELOAD');
+    setLoading(true);
+    setData([]);
     setListing(new Listing(listingCb, subreddit, token, limit));
   };
 
@@ -59,11 +60,11 @@ export default useListing = (
           setLoading(false);
         })
         .catch(error => {
-          setData([{error}]);
+          setData([{ error }]);
           setLoading(false);
         });
     }
   }, [listing]);
 
-  return {data, getPrev, getNext, reload, loading};
+  return { data, getPrev, getNext, reload, loading };
 };

@@ -14,7 +14,6 @@ export default Profile = ({ username = "" }) => {
   const theme = useTheme();
   const styles = useStyle(theme.colors);
   const { data, loading } = useProfile(username);
-  const { setAuth } = useAuth();
 
   const Test = () => (<View style={{ backgroundColor: theme.colors.background, flex: 1 }}></View>);
   const PassProps = (component, props) => () => (component(props))
@@ -33,11 +32,7 @@ export default Profile = ({ username = "" }) => {
   }
 
   return (
-    <Tab.Navigator screenOptions={{ tabBarStyle: styles.barStyle, tabBarLabelStyle: styles.barLabelStyle }}>
-      <Tab.Screen name="Posts" component={Test} />
-      <Tab.Screen name="Comments" component={Test} />
-      <Tab.Screen name="About" component={PassProps(About, { data: data })} />
-    </Tab.Navigator>
+    <About data={data} />
   );
 }
 
