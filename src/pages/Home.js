@@ -11,7 +11,7 @@ export default Home = () => {
   const [mode, setMode] = useState('Hot');
   const { data, getPrev, getNext, reload, loading } = useListing(
     getSubPostsListing,
-    //'r/askreddit',
+    '',
     mode.toLowerCase(),
     25,
   );
@@ -23,7 +23,7 @@ export default Home = () => {
 
   const renderPost = ({ item, index }) => {
     if (item.kind.substring(0, 3) === 't3') {
-      return <PostCard postData={item?.data} key={index} />;
+      return <PostCard postData={item.data} key={index} />;
     }
   };
 
@@ -67,6 +67,7 @@ export default Home = () => {
         onEndReachedThreshold={2}
         onRefresh={reload}
         refreshing={loading}
+        style={{...styles.root}}
       />
     </SafeAreaView>
   );

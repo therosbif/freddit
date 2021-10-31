@@ -5,6 +5,7 @@ import Listing from '../utils/Listing';
 export default useListing = (
   listingCb,
   subreddit,
+  mode,
   limit = 25,
   initExtraArgs = {},
 ) => {
@@ -42,9 +43,10 @@ export default useListing = (
   };
 
   const reload = () => {
-    setLoading(true);
     setData([]);
-    setListing(new Listing(listingCb, subreddit, token, limit));
+    console.log('RELOAD');
+    setLoading(true);
+    setListing(new Listing(listingCb, subreddit, mode, token, limit));
   };
 
   useEffect(() => {

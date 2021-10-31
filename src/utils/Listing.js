@@ -1,7 +1,5 @@
-import { SUCCESS } from '../api/constants';
-
 export default class Listing {
-  constructor(cb, subreddit, token, limit = 25) {
+  constructor(cb, subreddit, mode, token, limit = 25) {
     this.cb = cb;
     this.before = [];
     this.after = '';
@@ -9,6 +7,7 @@ export default class Listing {
     this.count = 0;
     this.limit = limit;
     this.subreddit = subreddit;
+    this.mode = mode;
     this.token = token;
   }
 
@@ -17,6 +16,7 @@ export default class Listing {
       limit: this.limit,
       count: 0,
       subreddit: this.subreddit,
+      mode: this.mode,
       token: this.token,
       ...extraArgs,
     };
@@ -47,6 +47,7 @@ export default class Listing {
       after: this.after,
       count: this.count,
       subreddit: this.subreddit,
+      mode: this.mode,
       token: this.token,
       ...extraArgs,
     };
@@ -77,6 +78,7 @@ export default class Listing {
       before: this.before[this.before.length - 1],
       count: this.count,
       subreddit: this.subreddit,
+      mode: this.mode,
       token: this.token,
       ...extraArgs,
     };
