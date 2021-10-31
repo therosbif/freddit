@@ -1,5 +1,5 @@
 import RTURL from '../utils/RTUrl';
-import {baseUrl} from './constants';
+import { baseUrl } from './constants';
 
 async function getSubPostsListing({
   token,
@@ -27,4 +27,4 @@ async function getSubPostsListing({
   );
 }
 
-export {getSubPostsListing};
+export { getSubPostsListing };

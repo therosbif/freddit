@@ -1,5 +1,4 @@
 import React from 'react';
-import { Appearance } from 'react-native';
 import { DarkTheme, Provider as PaperProvider } from 'react-native-paper';
 import Navigation from './src/navigation/Navigation';
 import StoreProvider from './src/providers/StoreProvider';

@@ -10,18 +10,23 @@ import {
   TouchableRipple,
   Image,
 } from 'react-native-paper';
+import { vote } from '../../api/posts';
 import useProfile from '../../hooks/useProfile';
 import useSubredditInfo from '../../hooks/useSubredditInfo';
+import useVote from '../../hooks/useVote';
+import { useAuth } from '../../providers/AuthProvider';
 import RTURL from '../../utils/RTUrl';
 import StringFormatter from '../../utils/StringFormatter';
 
-export default PostCard = ({ postData }) => {
+export default PostCard = ({ navigation, postData }) => {
+  const { token } = useAuth();
   const { data: profileData, loading: profileLoading } = useProfile(
     postData?.author,
   );
   const { data: subData, loading: subLoading } = useSubredditInfo(
     postData?.subreddit,
   );
+  const { upvote, downvote, unvote, state } = useVote(postData.name, postData.likes);
 
   if (!postData) {
     return <Text>post undefined</Text>;
@@ -65,7 +70,7 @@ export default PostCard = ({ postData }) => {
           <TouchableRipple
             rippleColor="rgba(255, 255, 255, .32)"
             borderless={true}
-            onPress={() => console.log('zefibze')}
+            onPress={() => console.log("ihbizjbef")}
             style={{ borderRadius: 50, ...styles.header }}>
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
               <Avatar.Image
@@ -101,9 +106,17 @@ export default PostCard = ({ postData }) => {
         <Card.Cover resizeMode="cover" source={{ uri: postData.url }} />
       )}
       <Card.Actions>
-        <IconButton icon="arrow-up-bold" color="red" />
-        <Text>{StringFormatter.abbrevNumber(postData.ups)}</Text>
-        <IconButton icon="arrow-down-bold" color="blue" />
+        <IconButton
+          icon="arrow-up-bold"
+          color={(state) ? "red" : "gray"}
+          onPress={() => { (state) ? unvote() : upvote() }}
+        />
+        {!postData.hide_score && <Text>{StringFormatter.abbrevNumber(postData.ups)}</Text>}
+        <IconButton
+          icon="arrow-down-bold"
+          color={(state === false) ? "blue" : "gray"}
+          onPress={() => { (state === false) ? unvote() : downvote() }}
+        />
       </Card.Actions>
     </Card>
   );
