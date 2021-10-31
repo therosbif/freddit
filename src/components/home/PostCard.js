@@ -8,18 +8,14 @@ import {
   Paragraph,
   Text,
   TouchableRipple,
-  Image,
 } from 'react-native-paper';
-import { vote } from '../../api/posts';
 import useProfile from '../../hooks/useProfile';
 import useSubredditInfo from '../../hooks/useSubredditInfo';
 import useVote from '../../hooks/useVote';
-import { useAuth } from '../../providers/AuthProvider';
 import RTURL from '../../utils/RTUrl';
 import StringFormatter from '../../utils/StringFormatter';
 
-export default PostCard = ({ navigation, postData }) => {
-  const { token } = useAuth();
+export default PostCard = ({ postData }) => {
   const { data: profileData, loading: profileLoading } = useProfile(
     postData?.author,
   );
@@ -27,6 +23,10 @@ export default PostCard = ({ navigation, postData }) => {
     postData?.subreddit,
   );
   const { upvote, downvote, unvote, state } = useVote(postData.name, postData.likes);
+
+  useEffect(() => {
+    console.log(subData);
+  }, [subData])
 
   if (!postData) {
     return <Text>post undefined</Text>;
@@ -37,14 +37,15 @@ export default PostCard = ({ navigation, postData }) => {
       return <ActivityIndicator size={24} animating={true} />;
     }
     return (
-      <View style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
+      <View
+        style={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
         {!profileData ? (
           <Text style={styles.header}>No profile data.</Text>
         ) : (
           <TouchableRipple
             rippleColor="rgba(255, 255, 255, .32)"
             borderless={true}
-            onPress={() => console.log('zefibze')}
+            onPress={() => console.log('sdhfjkls')}
             style={{ borderRadius: 50, ...styles.header }}>
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
               <Avatar.Image
@@ -63,9 +64,10 @@ export default PostCard = ({ navigation, postData }) => {
                 u/{profileData.subreddit.display_name.substr(2)}
               </Text>
             </View>
-          </TouchableRipple>)}
-        {!subData ? (
-          <Text style={styles.header}>No subreddit data.</Text>
+          </TouchableRipple>
+        )}
+        {!subData?.data ? (
+          <Text style={styles.header}>No subreddit data. {subData?.error}</Text>
         ) : (
           <TouchableRipple
             rippleColor="rgba(255, 255, 255, .32)"
@@ -130,5 +132,5 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: 'center',
     padding: 2,
-  }
+  },
 });

@@ -10,7 +10,7 @@ async function getSubPostsListing({
   before,
   after,
 }) {
-  subreddit = subreddit.length === 0 ? '' : '/' + subreddit;
+  subreddit = subreddit === '' ? '' : '/' + subreddit;
   return fetch(
     `${baseUrl}${subreddit}/${mode}/${RTURL.asQueryParams({
       count,
