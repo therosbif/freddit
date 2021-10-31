@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {useState} from 'react';
 import {errors, SUCCESS} from '../api/constants';
-import {getMe} from '../api/profile';
+import {getSubredditInfo} from '../api/subreddit';
 import {useAuth} from '../providers/AuthProvider';
 
-export default useMe = () => {
+export default useSubredditInfo = ({subreddit}) => {
   const {token} = useAuth();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -12,13 +12,13 @@ export default useMe = () => {
   useEffect(() => {
     if (token) {
       (async () => {
-        const raw = await getMe(token);
+        const raw = await getSubredditInfo(token, subreddit);
 
         if (raw.ok && raw.status === 200) {
           setData({...(await raw.json()), resStatus: SUCCESS});
         } else {
           setData({
-            error: "Couldn't get profile information",
+            error: "Couldn't get subreddit information",
             resStatus: errors.NETWORK_ERROR,
           });
         }

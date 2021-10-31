@@ -11,19 +11,28 @@ import {
   Image,
 } from 'react-native-paper';
 import useProfile from '../../hooks/useProfile';
+import useSubredditInfo from '../../hooks/useSubredditInfo';
 import RTURL from '../../utils/RTUrl';
 import StringFormatter from '../../utils/StringFormatter';
 
 export default PostCard = ({postData}) => {
-  const {data, loading} = useProfile(postData?.author);
+  const {profileData, profileLoading} = useProfile(postData?.author);
+  const {subData, subLoading} = useSubredditInfo(postData?.subreddit);
 
   if (!postData) {
     return <Text>post undefined</Text>;
   }
 
   const Header = () => {
-    if (loading) {
+    if (profileLoading || subLoading) {
       return <ActivityIndicator size={24} animating={true} />;
+    }
+    console.log('subData: ' + JSON.stringify(subData));
+    console.log('profileData: ' + JSON.stringify(profileData));
+    if (!profileData) {
+      return <Text>No profile data.</Text>
+    } else if (!subData) {
+      return <Text>No subreddit data.</Text>
     }
     return (
       <TouchableRipple
@@ -34,17 +43,25 @@ export default PostCard = ({postData}) => {
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <Avatar.Image
             size={24}
-            source={{uri: RTURL.removeQueryParams(data.subreddit.icon_img)}}
+            source={{
+              uri: RTURL.removeQueryParams(profileData.subreddit.icon_img),
+            }}
           />
           <Text
             style={{textAlignVertical: 'center', marginLeft: 5, fontSize: 12}}
             numberOfLines={1}>
-            {'u/' + data.subreddit.display_name.substr(2)}
+            u/{profileData.subreddit.display_name.substr(2)}
           </Text>
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          {/* <Avatar.Image
+            size={24}
+            source={{uri: RTURL.removeQueryParams(subData)}}
+          /> */}
           <Text
             style={{textAlignVertical: 'center', marginLeft: 5, fontSize: 12}}
             numberOfLines={1}>
-            {'r/' + postData.subreddit}
+            r/{postData.subreddit}
           </Text>
         </View>
       </TouchableRipple>
@@ -58,7 +75,7 @@ export default PostCard = ({postData}) => {
       </Card.Content>
       <Card.Title title={postData.title} titleNumberOfLines={0} />
       <Card.Content>
-        {postData.is_self ? (
+        {/.*\.(jpg|gif|png)$/.test(postData.url_overridden_by_dest) ? (
           <Paragraph numberOfLines={3}>{postData.selftext}</Paragraph>
         ) : (
           <Image source={{uri: postData.thumbnail}} />
