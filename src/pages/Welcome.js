@@ -1,8 +1,8 @@
-import React from "react"
-import { StyleSheet, View } from "react-native";
-import { useAuth } from "../providers/AuthProvider";
-import { useRuntimeInfo } from "../providers/RuntimeInfoProvider";
-import { useTheme, Button, Title } from "react-native-paper";
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {useAuth} from '../providers/AuthProvider';
+import {useRuntimeInfo} from '../providers/RuntimeInfoProvider';
+import {useTheme, Button, Title} from 'react-native-paper';
 
 export default Welcome = () => {
   const theme = useTheme();
@@ -16,28 +16,28 @@ export default Welcome = () => {
       <Button
         style={styles.button}
         onPress={() => {
-          auth.setAuth().then(() => runtimeInfo.setFirstRun(false))
+          auth.setAuth().then(() => runtimeInfo.setFirstRun(false));
         }}
-        mode='contained'
-      >
+        mode="contained">
         Sign In
       </Button>
     </View>
-  )
-}
+  );
+};
 
-const useStyle = (colors) => StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: colors.background,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: '10%',
-  },
-  button: {
-    margin: '2%',
-  },
-  btext: {
-    overflow: 'visible'
-  }
-})
+const useStyle = (colors) =>
+  StyleSheet.create({
+    root: {
+      flex: 1,
+      backgroundColor: colors.background,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingVertical: '10%',
+    },
+    button: {
+      margin: '2%',
+    },
+    btext: {
+      overflow: 'visible',
+    },
+  });

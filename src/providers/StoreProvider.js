@@ -3,13 +3,11 @@ import RuntimeInfoProvider from './RuntimeInfoProvider';
 import AuthProvider from './AuthProvider';
 import PropProvider from './PropProvider';
 
-export default StoreProvider = ({ children }) => {
+export default StoreProvider = ({children}) => {
   return (
     <RuntimeInfoProvider>
       <AuthProvider>
-        <PropProvider>
-          {children}
-        </PropProvider>
+        <PropProvider>{children}</PropProvider>
       </AuthProvider>
     </RuntimeInfoProvider>
   );

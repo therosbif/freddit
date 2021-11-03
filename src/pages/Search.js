@@ -16,14 +16,15 @@ export default Search = ({ route }) => {
     <View style={styles.root}>
       <Text>SEARCH PAGE</Text>
     </View>
-  )
-}
+  );
+};
 
-const useStyle = (colors) => StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: colors.background,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})
+const useStyle = (colors) =>
+  StyleSheet.create({
+    root: {
+      flex: 1,
+      backgroundColor: colors.background,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });

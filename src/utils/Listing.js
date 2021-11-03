@@ -23,7 +23,7 @@ export default class Listing {
 
     return new Promise((resolve, reject) =>
       this.cb(args)
-        .then(async res => {
+        .then(async (res) => {
           if (res.ok) {
             const json = await res.json();
 
@@ -34,7 +34,7 @@ export default class Listing {
             return reject(res.status);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           return reject('An error occured');
         }),
@@ -54,7 +54,7 @@ export default class Listing {
 
     return new Promise((resolve, reject) =>
       this.cb(args)
-        .then(async res => {
+        .then(async (res) => {
           const json = await res.json();
 
           this.after = json.data.after;
@@ -65,7 +65,7 @@ export default class Listing {
           this.count = json.data.dist;
           return resolve(json.data.children);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           return reject('An error occured');
         }),
@@ -85,7 +85,7 @@ export default class Listing {
 
     return new Promise((resolve, reject) =>
       this.cb(args)
-        .then(async res => {
+        .then(async (res) => {
           if (res.ok) {
             const json = await res.json();
 
@@ -96,7 +96,7 @@ export default class Listing {
             return resolve(json.data.children);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           return reject('An error occured');
         }),

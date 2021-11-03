@@ -1,6 +1,6 @@
-import React from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { useTheme } from "react-native-paper";
+import React from 'react';
+import {Image, StyleSheet, View} from 'react-native';
+import {useTheme} from 'react-native-paper';
 
 export default SplashScreen = () => {
   const theme = useTheme();
@@ -10,14 +10,15 @@ export default SplashScreen = () => {
     <View style={styles.root}>
       <Image source={require('../assets/jack.png')} />
     </View>
-  )
-}
+  );
+};
 
-const useStyle = (colors) => StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: colors.background,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-})
+const useStyle = (colors) =>
+  StyleSheet.create({
+    root: {
+      flex: 1,
+      backgroundColor: colors.background,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });

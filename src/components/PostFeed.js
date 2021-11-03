@@ -47,7 +47,7 @@ export default PostFeed = ({ route }) => {
         ))}
       </View>
     );
-  }
+  };
 
   if (data[0]?.error) {
     return (

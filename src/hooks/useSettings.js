@@ -18,11 +18,11 @@ export default useSettings = () => {
       if (res.ok && res.status === 200) {
         setData(await res.json());
       } else {
-        setData({ error: res.status })
+        setData({ error: res.status });
       }
       setLoading(false);
-    })()
-  }, [])
+    })();
+  }, []);
 
   return { loading, data, patch };
 }

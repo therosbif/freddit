@@ -6,7 +6,7 @@ import StoreProvider from './src/providers/StoreProvider';
 const theme = {
   ...DarkTheme,
   roundness: 20,
-}
+};
 
 const App = () => {
   return (

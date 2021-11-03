@@ -27,7 +27,10 @@ export default PostCard = ({ postData }) => {
   const { data: subData, loading: subLoading } = useSubredditInfo(
     `r/${postData?.subreddit}`,
   );
-  const { upvote, downvote, unvote, state } = useVote(postData.name, postData.likes);
+  const { upvote, downvote, unvote, state } = useVote(
+    postData.name,
+    postData.likes,
+  );
 
   if (!postData) {
     return <Text>post undefined</Text>;
@@ -113,14 +116,20 @@ export default PostCard = ({ postData }) => {
       <Card.Actions>
         <IconButton
           icon="arrow-up-bold"
-          color={(state) ? "red" : "gray"}
-          onPress={() => { (state) ? unvote() : upvote() }}
+          color={state ? 'red' : 'gray'}
+          onPress={() => {
+            state ? unvote() : upvote();
+          }}
         />
-        {!postData.hide_score && <Text>{StringFormatter.abbrevNumber(postData.ups)}</Text>}
+        {!postData.hide_score && (
+          <Text>{StringFormatter.abbrevNumber(postData.ups)}</Text>
+        )}
         <IconButton
           icon="arrow-down-bold"
-          color={(state === false) ? "blue" : "gray"}
-          onPress={() => { (state === false) ? unvote() : downvote() }}
+          color={state === false ? 'blue' : 'gray'}
+          onPress={() => {
+            state === false ? unvote() : downvote();
+          }}
         />
       </Card.Actions>
       <ImageViewer enabled={show} onDismiss={() => setShow(false)} url={postData.url} />

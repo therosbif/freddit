@@ -24,7 +24,7 @@ async function getPrefs(token) {
     headers: {
       Authorization: `bearer ${token}`,
     },
-  })
+  });
 }
 
 async function setPrefs(token, settings) {

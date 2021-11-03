@@ -1,4 +1,4 @@
-import { baseUrl } from './constants';
+import {baseUrl} from './constants';
 
 async function getSubredditInfo(token, subreddit) {
   return fetch(`${baseUrl}/${subreddit}/about`, {
@@ -9,4 +9,4 @@ async function getSubredditInfo(token, subreddit) {
   });
 }
 
-export { getSubredditInfo };
+export {getSubredditInfo};
