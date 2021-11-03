@@ -1,24 +1,27 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 
 const RuntimeInfoContext = createContext(null);
 const runtimeInfoStorage = 'runtimeInfo';
 
-export default RuntimeInfoProvider = ({ children }) => {
+export default RuntimeInfoProvider = ({children}) => {
   const [reload, setReload] = useState(0);
   const [splashScreen, setSplashScreen] = useState(true);
   const [firstRun, setFirstRun] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const reset = async () => {
-    return new Promise((resolve, reject) => AsyncStorage.removeItem(runtimeInfoStorage)
-      .then(() => {
-        setReload(0);
-        return resolve('Ok');
-      }).catch((err) => {
-        return reject('Couldn\'t reset settings');
-      }))
-  }
+    return new Promise((resolve, reject) =>
+      AsyncStorage.removeItem(runtimeInfoStorage)
+        .then(() => {
+          setReload(0);
+          return resolve('Ok');
+        })
+        .catch((err) => {
+          return reject("Couldn't reset settings");
+        }),
+    );
+  };
 
   useEffect(() => {
     (async () => {
@@ -31,24 +34,30 @@ export default RuntimeInfoProvider = ({ children }) => {
           setFirstRun(parsed.first_run);
         }
       } else {
-        await AsyncStorage.setItem(runtimeInfoStorage, JSON.stringify({
-          first_run: firstRun,
-        }));
+        await AsyncStorage.setItem(
+          runtimeInfoStorage,
+          JSON.stringify({
+            first_run: firstRun,
+          }),
+        );
       }
     })().then(() => {
       setSplashScreen(false);
-    })
-  }, [reload])
+    });
+  }, [reload]);
 
   useEffect(() => {
     if (firstRun === false) {
       (async () => {
-        await AsyncStorage.setItem(runtimeInfoStorage, JSON.stringify({
-          first_run: firstRun,
-        }));
-      })()
+        await AsyncStorage.setItem(
+          runtimeInfoStorage,
+          JSON.stringify({
+            first_run: firstRun,
+          }),
+        );
+      })();
     }
-  }, [firstRun])
+  }, [firstRun]);
 
   return (
     <RuntimeInfoContext.Provider
@@ -63,8 +72,8 @@ export default RuntimeInfoProvider = ({ children }) => {
       {children}
     </RuntimeInfoContext.Provider>
   );
-}
+};
 
 const useRuntimeInfo = () => useContext(RuntimeInfoContext);
 
-export { useRuntimeInfo };
+export {useRuntimeInfo};

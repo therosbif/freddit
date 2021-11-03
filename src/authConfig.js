@@ -1,8 +1,8 @@
-import base64 from "react-native-base64";
-import { baseUrl } from "./api/constants";
+import base64 from 'react-native-base64';
+import {baseUrl} from './api/constants';
 
 const authConfig = {
-  additionalParameters: { duration: "permanent" },
+  additionalParameters: {duration: 'permanent'},
   redirectUrl: 'com.redditech://oauth2redirect/reddit',
   clientId: 'CVv5Xz-CbREPVye86OgwAw',
   clientSecret: '',
@@ -31,8 +31,10 @@ const refreshConfig = {
   clientId: authConfig.clientId,
   redirectUrl: authConfig.redirectUrl,
   scopes: authConfig.scopes,
-  additionalHeaders: { Authorization: `Basic ${base64.encode(authConfig.clientId + ':')}` }
-}
+  additionalHeaders: {
+    Authorization: `Basic ${base64.encode(authConfig.clientId + ':')}`,
+  },
+};
 
 export default authConfig;
-export { refreshConfig };
+export {refreshConfig};

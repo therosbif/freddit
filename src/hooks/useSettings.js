@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { getPrefs } from "../api/profile";
-import { useAuth } from "../providers/AuthProvider";
+import React, {useEffect, useState} from 'react';
+import {getPrefs} from '../api/profile';
+import {useAuth} from '../providers/AuthProvider';
 
 export default useSettings = () => {
-  const { token } = useAuth();
+  const {token} = useAuth();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
 
@@ -14,11 +14,11 @@ export default useSettings = () => {
       if (res.ok && res.status === 200) {
         setData(await res.json());
       } else {
-        setData({ error: res.status })
+        setData({error: res.status});
       }
       setLoading(false);
-    })()
-  }, [])
+    })();
+  }, []);
 
-  return { loading, data };
-}
+  return {loading, data};
+};

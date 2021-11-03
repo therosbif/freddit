@@ -6,7 +6,7 @@ import About from '../components/profile/About';
 import useProfile from '../hooks/useProfile';
 import {errors} from '../api/constants';
 import LoadingModal from '../components/LoadingModal';
-import { PostFeed } from "../components/PostFeed";
+import {PostFeed} from '../components/PostFeed';
 
 const Tab = createMaterialTopTabNavigator();
 
