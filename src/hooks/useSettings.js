@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { getPrefs } from "../api/profile";
+import { getPrefs, setPrefs } from "../api/profile";
 import { useAuth } from "../providers/AuthProvider";
 
 export default useSettings = () => {
   const { token } = useAuth();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+
+  const patch = async (modData) => {
+    return setPrefs(token, modData);
+  }
 
   useEffect(() => {
     (async () => {
@@ -20,5 +24,5 @@ export default useSettings = () => {
     })()
   }, [])
 
-  return { loading, data };
+  return { loading, data, patch };
 }

@@ -14,6 +14,7 @@ const authConfig = {
     'vote',
     'privatemessages',
     'read',
+    'account',
   ],
   serviceConfiguration: {
     authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',

@@ -32,7 +32,7 @@ export default Navigation = () => {
       {(splashScreen && <SplashScreen />) ||
         (token && (
           <Tab.Navigator
-            initialRouteName="Settings"
+            initialRouteName="Home"
             labeled={false}
             barStyle={styles.barStyle}>
             <Tab.Screen

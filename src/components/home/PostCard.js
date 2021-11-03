@@ -1,5 +1,6 @@
+import { useNavigation } from '@react-navigation/core';
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Image, Modal, Pressable, StyleSheet, View } from 'react-native';
 import {
   ActivityIndicator,
   Avatar,
@@ -9,13 +10,17 @@ import {
   Text,
   TouchableRipple,
 } from 'react-native-paper';
+import { useState } from 'react/cjs/react.development';
 import useProfile from '../../hooks/useProfile';
 import useSubredditInfo from '../../hooks/useSubredditInfo';
 import useVote from '../../hooks/useVote';
 import RTURL from '../../utils/RTUrl';
 import StringFormatter from '../../utils/StringFormatter';
+import ImageViewer from '../core/ImageViewer';
 
 export default PostCard = ({ postData }) => {
+  const navigation = useNavigation();
+  const [show, setShow] = useState(false);
   const { data: profileData, loading: profileLoading } = useProfile(
     postData?.author,
   );
@@ -68,7 +73,7 @@ export default PostCard = ({ postData }) => {
           <TouchableRipple
             rippleColor="rgba(255, 255, 255, .32)"
             borderless={true}
-            onPress={() => console.log("ihbizjbef")}
+            onPress={() => navigation.navigate("SubReddit", { subreddit: `r/${postData.subreddit}` })}
             style={{ borderRadius: 50, ...styles.header }}>
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
               <Avatar.Image
@@ -101,7 +106,9 @@ export default PostCard = ({ postData }) => {
         <Paragraph numberOfLines={3}>{postData.selftext}</Paragraph>
       </Card.Content>
       {/.*\.(jpg|gif|png)$/.test(postData.url) && (
-        <Card.Cover resizeMode="cover" source={{ uri: postData.url }} />
+        <Pressable onPress={() => setShow(true)}>
+          <Card.Cover resizeMode="cover" source={{ uri: postData.url }} />
+        </Pressable>
       )}
       <Card.Actions>
         <IconButton
@@ -116,6 +123,7 @@ export default PostCard = ({ postData }) => {
           onPress={() => { (state === false) ? unvote() : downvote() }}
         />
       </Card.Actions>
+      <ImageViewer enabled={show} onDismiss={() => setShow(false)} url={postData.url} />
     </Card>
   );
 };

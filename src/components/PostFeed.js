@@ -5,19 +5,18 @@ import { getSubPostsListing } from '../api/posts';
 import PostCard from './home/PostCard';
 import useListing from '../hooks/useListing';
 
-export default PostFeed = ({ subreddit }) => {
+export default PostFeed = ({ route }) => {
   const theme = useTheme();
   const styles = useStyle(theme.colors);
   const [mode, setMode] = useState('Hot');
   const { data, getPrev, getNext, reload, loading } = useListing(
     getSubPostsListing,
-    subreddit,
+    (route?.params?.subreddit) ? route?.params?.subreddit : "",
     mode.toLowerCase(),
     25,
   );
 
   useEffect(() => {
-    console.log('subreddit: ' + subreddit);
     reload();
     console.log('mode: ' + mode);
   }, [mode]);
@@ -60,7 +59,7 @@ export default PostFeed = ({ subreddit }) => {
   }
 
   return (
-    <SafeAreaView style={{ ...styles.root }}>
+    <SafeAreaView style={styles.root}>
       <FlatList
         data={data}
         renderItem={renderPost}
@@ -69,7 +68,7 @@ export default PostFeed = ({ subreddit }) => {
         onEndReachedThreshold={2}
         onRefresh={reload}
         refreshing={loading}
-        style={{ ...styles.root }}
+        style={styles.root}
       />
     </SafeAreaView>
   );

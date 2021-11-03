@@ -6,10 +6,15 @@ export default Selector = ({ values, baseValue, setter, type = "menu" }) => {
   const theme = useTheme();
   const [value, setValue] = useState(baseValue);
   const [visible, setVisible] = useState(false);
+  const [modified, setModified] = useState(false);
 
   useEffect(() => {
     if (type === "menu") {
-      setter(value);
+      if (modified) {
+        setter(value);
+      } else {
+        setModified(true);
+      }
     }
   }, [value]);
 

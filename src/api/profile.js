@@ -27,4 +27,15 @@ async function getPrefs(token) {
   })
 }
 
-export { getMe, getUserAbout, getPrefs };
+async function setPrefs(token, settings) {
+  return fetch(`${baseUrl}/api/v1/me/prefs`, {
+    method: 'PATCH',
+    body: JSON.stringify(settings),
+    headers: {
+      Authorization: `bearer ${token}`,
+      "Content-type": 'application/json'
+    }
+  })
+}
+
+export { getMe, getUserAbout, getPrefs, setPrefs };
