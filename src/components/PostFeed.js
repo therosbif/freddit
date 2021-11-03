@@ -52,7 +52,7 @@ export default PostFeed = ({ subreddit }) => {
 
   if (data[0]?.error) {
     return (
-      <View style={{ ...styles.root, flex: 1 }}>
+      <View style={{ ...styles.root, flex: 1, justifyContent: 'center' }}>
         <Text style={{ textAlign: 'center' }}>Error: {data[0].error}</Text>
         <Button onPress={reload}>retry</Button>
       </View>

@@ -1,4 +1,4 @@
-import {baseUrl} from './constants';
+import { baseUrl } from './constants';
 
 async function getMe(token) {
   return fetch(`${baseUrl}/api/v1/me`, {
@@ -18,4 +18,13 @@ async function getUserAbout(token, username) {
   });
 }
 
-export {getMe, getUserAbout};
+async function getPrefs(token) {
+  return fetch(`${baseUrl}/api/v1/me/prefs`, {
+    method: 'GET',
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  })
+}
+
+export { getMe, getUserAbout, getPrefs };
