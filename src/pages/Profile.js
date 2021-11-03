@@ -30,12 +30,7 @@ export default Profile = ({username = ''}) => {
     );
   }
 
-  return (
-    <View>
-      <About data={data} />
-      {/* <PostFeed subreddit={data.name} /> */}
-    </View>
-  );
+  return <About data={data} />;
 };
 
 const useStyle = (colors) =>
